@@ -13,7 +13,12 @@
 import CurrencyItem from "@/components/CurrencyItem"
 
 	export default {
-		props: ["baseCurrenciesList"],
+		props: {
+			baseCurrenciesList: {
+				type: Array,
+				required: true
+			},
+		},
 
 		components: {
 			CurrencyItem

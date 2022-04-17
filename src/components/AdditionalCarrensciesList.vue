@@ -14,11 +14,17 @@
 import AdditionalItem from "@/components/AdditionalItem"
 
 	export default {
-		props: ["additionalCurrenciesList"],
+		props: {
+			additionalCurrenciesList: {
+				type: Array,
+				required: true
+			}
+		},
 
 		methods: {
 			removeCurrency(Cur_ID) {
 				this.$emit("remove-currency", Cur_ID)
+				localStorage.setItem("additionalCurrenciesList", JSON.stringify(this.additionalCurrenciesList))
 			}	
 		},
 
