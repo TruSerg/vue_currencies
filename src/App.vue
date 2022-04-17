@@ -1,38 +1,31 @@
 <template>
  <div>
-	 <h1>Currencies</h1>
-	 <!-- <AddCurrency
-	 	@add-currency="addCurrency" 
-	 	v-bind:currenciesList="currenciesList"
-	 /> -->
+	  <Header />
+	  <div class="main-wrapper">
+		 <h1 class="title">Валюты</h1>
+	  <CurrenciesList 
+	 	:baseCurrenciesList="baseCurrenciesList"
+	  />
 
-	 <form @submit.prevent="onSubmit">
-		<select name="LeaveType" @change="onChange" v-model="selectedValue">
-			<option v-for="currency of currenciesList" v-bind:value="currency.Cur_Abbreviation">{{currency.Cur_Abbreviation}}</option>
-		</select>
-		<button type="submit">Add Currency</button>
-	</form>
-
-	 <CurrenciesList 
-	 	v-bind:newCurrenciesList="newCurrenciesList"
+	  <AdditionalCarrensciesList 
+	 	:class="{ show: isShow }"
+	 	:additionalCurrenciesList="additionalCurrenciesList"
 		@remove-currency="removeCurrency"
-	 />
-	  <!-- <div class="baseCurrensies">
-		 <div v-for="currency of newCurrenciesList" >
-		 	<h4>1 {{currency.Cur_Abbreviation}} - {{currency.Cur_OfficialRate}} BLR</h4>
-		 </div>
-	 </div> 
-			  <div v-for="currency of currenciesList">
-		 
-		 <h4>1 {{currency.Cur_Abbreviation}} - {{currency.Cur_OfficialRate}} BLR</h4></div> -->
-		
+	  />
+	  <div class="buttons">
+		   <a-button type="primary" ghost @click="isShow=!isShow" class="btn">{{ btnText }}</a-button>
+	  		<!-- <a-button type="primary" ghost @click="clearedLocalStorage">Показать все</a-button> -->
+	  </div>
+	</div>
+	 	
  </div>
  
 </template>
 
 <script>
 import CurrenciesList from "@/components/CurrenciesList";
-// import AddCurrency from "@/components/AddCurrency";
+import AdditionalCarrensciesList from "@/components/AdditionalCarrensciesList"
+import Header from "@/components/Header"
 
 export default {
 	name: "App",
@@ -40,8 +33,9 @@ export default {
 	data() {
 		return {
 			currenciesList: [],
-			newCurrenciesList: [],
-			selectedValue: ""
+			baseCurrenciesList: [],
+			additionalCurrenciesList: [],
+			isShow: true
 		}
 	},
 
@@ -53,56 +47,84 @@ export default {
 				this.currenciesList = json
 
 				this.currenciesList.filter(currency => {
-					if (currency.Cur_Abbreviation === "USD" || currency.Cur_Abbreviation === "RUB" || currency.Cur_Abbreviation === "EUR") {
-						return this.newCurrenciesList.push(currency)
+					if (currency.Cur_Abbreviation === "USD" || currency.Cur_Abbreviation === "RUB" || currency.Cur_Abbreviation === "EUR" || currency.Cur_Abbreviation === "GBP") {
+						return this.baseCurrenciesList.push(currency)
+					}
+
+					if (!(currency.Cur_Abbreviation === "USD" || currency.Cur_Abbreviation === "RUB" || currency.Cur_Abbreviation === "EUR" || currency.Cur_Abbreviation === "GBP")) {
+						return this.additionalCurrenciesList.push(currency)
 					}
 				})
 			})
 		},
-		
+
 		removeCurrency(Cur_ID) {
-			this.newCurrenciesList = this.newCurrenciesList.filter(currency => currency.Cur_ID !== Cur_ID)
-		},
-
-		onChange(event) {
-				event.target.value;
-			},
-
-		onSubmit() {
-				
+			this.additionalCurrenciesList = this.additionalCurrenciesList.filter(currency => currency.Cur_ID !== Cur_ID)
 			
-
+			localStorage.setItem("additionalCurrenciesList", JSON.stringify(this.additionalCurrenciesList))
 		},
 
-		// addCurrency(newCurrency) {
-		// 	this.newCurrenciesList.push(newCurrency)
-		// },
+		clearedLocalStorage() {
+			
+		}
 	},
 
-	mounted() {
-		this.getCurrencies();
-	},
 
-	components: {
-		CurrenciesList,
-		// AddCurrency
+	 	computed: {
+			btnText() {
+				if(this.isShow) {
+					return 'Показать больше'
+				}
+					return 'Скрыть'
+		}
   },
 
-	
+	  	async mounted() {
+			const data = await localStorage.getItem("additionalCurrenciesList")
+
+			data ? this.additionalCurrenciesList = JSON.parse(data) : null
+	},
+
+	  mounted() {
+			 this.getCurrencies();
+		},
+
+		components: {
+			CurrenciesList,
+			AdditionalCarrensciesList,
+			Header
+  	},	
 }
 </script>
 
-<style>
-.baseCurrensies {
-	margin-bottom: 50px;
+<style scoped>
+.show {
+	display: none;
+}
+
+.title {
+	text-align: center;
+	margin-bottom: 1rem;
+	color: rgb(0, 41, 128);
+}
+
+.buttons {
+	text-align: center;
+}
+
+.main-wrapper {
+	padding: 20px 15px;
+	min-height: 100vh;
+	background-color: #FFDEAD;
+}
+
+.btn {
+	min-width: 150px;
 }
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  -moz-osx-font-smoothing: grayscale; 
 }
 </style>

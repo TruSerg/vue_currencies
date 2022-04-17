@@ -2,9 +2,8 @@
 	<div>
 		<ul>
 			<CurrencyItem
-				v-for="currency of newCurrenciesList"
-				v-bind:currency="currency"
-				v-on:remove-currency="removeCurrency"
+				v-for="currency of baseCurrenciesList"
+				:currency="currency"
 			/>
 		</ul>
 	</div>
@@ -14,13 +13,7 @@
 import CurrencyItem from "@/components/CurrencyItem"
 
 	export default {
-		props: ["newCurrenciesList"],
-
-		methods: {
-			removeCurrency(Cur_ID) {
-				this.$emit("remove-currency", Cur_ID)
-			}
-		},
+		props: ["baseCurrenciesList"],
 
 		components: {
 			CurrencyItem
@@ -28,5 +21,23 @@ import CurrencyItem from "@/components/CurrencyItem"
 
 	}
 </script>
+
+<style scoped>
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		margin-bottom: 2rem;
+	}
+
+	.currency-name {
+		margin-right: 1rem;
+	}
+
+	.second-currency-name {
+		margin-right: 1rem;
+		color: rgb(79, 206, 122);
+	}
+</style>
 	
 
