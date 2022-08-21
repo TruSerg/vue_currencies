@@ -2,7 +2,7 @@
  <div>
 	  <Header />
 	  <div class="main-wrapper">
-		 <h1 class="title">Валюты</h1> 
+		 <h1 class="title">Currencies</h1>
 	  <CurrenciesList 
 	 	:baseCurrenciesList="baseCurrenciesList"
 	  />
@@ -73,13 +73,11 @@ export default {
 		
 
 		mounted() {
+      this.getCurrencies();
+
 			const data = localStorage.getItem("additionalCurrenciesList")
 
 			data ? this.additionalCurrenciesList = JSON.parse(data) : null
-		},
-
-		mounted() {
-			 this.getCurrencies();
 		},
 
 	 	computed: {
@@ -107,7 +105,7 @@ export default {
 	.title {
 		text-align: center;
 		margin-bottom: 1rem;
-		color: rgb(0, 41, 128);
+    color: #2690fe;
 	}
 
 	.buttons {
