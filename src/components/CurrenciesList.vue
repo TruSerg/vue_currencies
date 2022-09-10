@@ -34,15 +34,6 @@ import CurrencyItem from "@/components/CurrencyItem"
 		padding: 0;
 		margin-bottom: 2rem;
 	}
-
-	.currency-name {
-		margin-right: 1rem;
-	}
-
-	.second-currency-name {
-		margin-right: 1rem;
-		color: rgb(79, 206, 122);
-	}
 </style>
 	
 

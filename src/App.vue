@@ -3,14 +3,14 @@
 	  <Header />
 	  <div class="main-wrapper">
 		 <h1 class="title">Currencies</h1>
-	  <CurrenciesList 
-	 	:baseCurrenciesList="baseCurrenciesList"
+	  <CurrenciesList
+        :baseCurrenciesList="baseCurrenciesList"
 	  />
 
 	  <AdditionalCarrensciesList 
-	 	:class="{ show: isShow }"
-	 	:additionalCurrenciesList="additionalCurrenciesList"
-		@remove-currency="removeCurrency"
+        :class="{ show: isShow }"
+        :additionalCurrenciesList="additionalCurrenciesList"
+        @remove-currency="removeCurrency"
 	  />
 	  <div class="buttons">
 		   <a-button type="primary" ghost @click="isShow=!isShow" class="btn">{{ btnText }}</a-button>
