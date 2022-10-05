@@ -3,11 +3,13 @@
 	  <Header />
 	  <div class="main-wrapper">
 		 <h1 class="title">Currencies</h1>
+      <Loader class="loader" v-if="isLoading" />
 	  <CurrenciesList
+        v-else="baseCurrenciesList"
         :baseCurrenciesList="baseCurrenciesList"
 	  />
 
-	  <AdditionalCarrensciesList 
+	  <AdditionalCarrensciesList
         :class="{ show: isShow }"
         :additionalCurrenciesList="additionalCurrenciesList"
         @remove-currency="removeCurrency"
@@ -25,6 +27,7 @@
 import CurrenciesList from "@/components/CurrenciesList";
 import AdditionalCarrensciesList from "@/components/AdditionalCarrensciesList"
 import Header from "@/components/Header"
+import Loader from "@/components/Loader"
 
 export default {
 	name: "App",
@@ -35,6 +38,7 @@ export default {
 				baseCurrenciesList: [],
 				additionalCurrenciesList: [],
 				isShow: true,
+        isLoading: true,
 			}
 		},
 
@@ -44,8 +48,10 @@ export default {
 				await fetch("https://www.nbrb.by/api/exrates/rates?periodicity=0")
 						.then(response => response.json())
 						.then(json =>  {
-						this.currenciesList = json
-		
+                this.currenciesList = json
+
+                this.isLoading = false
+
 						this.currenciesList.filter(currency => {
 							if (currency.Cur_Abbreviation === "USD" || currency.Cur_Abbreviation === "RUB" || currency.Cur_Abbreviation === "EUR" || currency.Cur_Abbreviation === "GBP") {
 								return this.baseCurrenciesList.push(currency)
@@ -93,6 +99,7 @@ export default {
 			CurrenciesList,
 			AdditionalCarrensciesList,
 			Header,
+      Loader,
   		},	
 }
 </script>
@@ -107,6 +114,10 @@ export default {
 		margin-bottom: 1rem;
     color: #2690fe;
 	}
+
+  .loader {
+    margin: 0 auto;
+  }
 
 	.buttons {
 		text-align: center;
