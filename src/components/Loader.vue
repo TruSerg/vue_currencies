@@ -16,7 +16,7 @@
     width: 54px;
     height: 54px;
     margin: 8px;
-    border: 5px solid #2690fe;
+    border: 6px solid #2690fe;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: #2690fe transparent transparent transparent;
@@ -36,14 +36,6 @@
     }
     100% {
       transform: rotate(360deg);
-    }
-  }
-
-  @media(max-width: 560px) {
-    .lds-ring div {
-      width: 44px;
-      height: 44px;
-      border: 4px solid #2690fe;
     }
   }
 </style>
