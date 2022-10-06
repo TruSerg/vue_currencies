@@ -3,11 +3,13 @@
 	  <Header />
 	  <div class="main-wrapper">
 		 <h1 class="title">Currencies</h1>
-      <Loader class="loader" v-if="isLoading" />
-	  <CurrenciesList
-        v-else="baseCurrenciesList"
-        :baseCurrenciesList="baseCurrenciesList"
-	  />
+      <div class="currencies-wrapper">
+        <Loader class="loader" v-if="isLoading" />
+        <CurrenciesList
+            v-else="baseCurrenciesList"
+            :baseCurrenciesList="baseCurrenciesList"
+        />
+      </div>
 
 	  <AdditionalCarrensciesList
         :class="{ show: isShow }"
@@ -130,6 +132,15 @@ export default {
 		background-color: #FFDEAD;
 	}
 
+  .currencies-wrapper {
+    max-width: 600px;
+    min-height: 40vh;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 	.btn {
 		min-width: 150px;
 	}
@@ -139,4 +150,10 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale; 
 	}
+
+  @media(max-width: 424px) {
+    .currencies-wrapper {
+      min-height: 60vh;
+    }
+  }
 </style>

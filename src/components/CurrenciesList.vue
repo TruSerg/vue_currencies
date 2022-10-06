@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="currencies-list">
 		<ul>
 			<CurrencyItem
 				v-for="currency of baseCurrenciesList"
@@ -28,6 +28,10 @@ import CurrencyItem from "@/components/CurrencyItem"
 </script>
 
 <style scoped>
+  .currencies-list {
+    width: 100%;
+  }
+
 	ul {
 		list-style: none;
 		margin: 0;
